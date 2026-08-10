@@ -94,7 +94,7 @@
       "icon": "resources/icons/icon.ico"
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": ["AppImage"],
       "icon": "resources/icons/icon.png"
     },
     "mac": {
