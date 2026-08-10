@@ -28,5 +28,13 @@ jobs:
       - run: npm install
       - name: Build & Package Binary Installer (${{ matrix.target }})
         run: node scripts/package.js ${{ matrix.target }}
+      - name: Upload Binaries to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/*.exe
+            release/*.AppImage
+            release/*.dmg
+            release/*.deb
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
