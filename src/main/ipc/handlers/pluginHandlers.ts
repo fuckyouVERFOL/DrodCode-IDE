@@ -15,6 +15,15 @@ export function registerPluginHandlers(): void {
     return pluginManager.getInstalledPlugins();
   });
 
+  ipcMain.handle(IPC_CHANNELS.PLUGIN.SEARCH_MARKETPLACE, async (_, query: string) => {
+    try {
+      const plugins = await marketplaceClient.searchPlugins(query);
+      return { success: true, plugins };
+    } catch (err: any) {
+      return { success: false, error: err.message, plugins: [] };
+    }
+  });
+
   ipcMain.handle(IPC_CHANNELS.PLUGIN.INSTALL, async (_, downloadUrl: string) => {
     if (!pluginManager) return { success: false, error: 'Plugin manager not initialized' };
     try {

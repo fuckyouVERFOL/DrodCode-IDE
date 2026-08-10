@@ -1,50 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Marketplace } from './Marketplace';
 import { usePluginStore } from '../../../store/pluginStore';
 import { IPCService } from '../../../services/ipcService';
 import { IPC_CHANNELS } from '../../../../main/ipc/channels';
-import { Package } from 'lucide-react';
+import { Package, Search } from 'lucide-react';
 import { InstalledPlugin, MarketplacePlugin } from '../../../../shared/types/plugin';
 
 export const Extensions: React.FC = () => {
   const { installed, marketplace, searchQuery, setInstalled, setMarketplace, setSearchQuery } = usePluginStore();
+  const [loading, setLoading] = useState(false);
+
+  const fetchMarketplace = async (query: string) => {
+    setLoading(true);
+    try {
+      const res = await IPCService.invoke(IPC_CHANNELS.PLUGIN.SEARCH_MARKETPLACE, query);
+      if (res && res.success && Array.isArray(res.plugins)) {
+        setMarketplace(res.plugins);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     IPCService.invoke(IPC_CHANNELS.PLUGIN.GET_INSTALLED).then((res: InstalledPlugin[]) => {
       if (res) setInstalled(res);
     });
 
-    // Mock initial marketplace list
-    setMarketplace([
-      {
-        id: 'drodcode.prettier',
-        name: 'prettier',
-        displayName: 'DrodCode Prettier',
-        description: 'Официальный форматировщик кода Prettier для JS/TS/HTML/CSS',
-        version: '1.0.0',
-        publisher: 'drodcode',
-        downloads: 1420,
-        rating: 4.9,
-        downloadUrl: 'http://localhost:3000/api/plugins/download/drodcode.prettier',
-      },
-      {
-        id: 'drodcode.python-tools',
-        name: 'python-tools',
-        displayName: 'Python Intelligence',
-        description: 'Подсветка, Pylint линтинг и автодополнение для Python',
-        version: '1.1.0',
-        publisher: 'drodcode',
-        downloads: 2890,
-        rating: 4.8,
-        downloadUrl: 'http://localhost:3000/api/plugins/download/drodcode.python-tools',
-      },
-    ]);
+    fetchMarketplace('');
   }, []);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchMarketplace(searchQuery);
+  };
 
   const handleInstall = async (plugin: MarketplacePlugin) => {
     await IPCService.invoke(IPC_CHANNELS.PLUGIN.INSTALL, plugin.downloadUrl);
     const updated = await IPCService.invoke(IPC_CHANNELS.PLUGIN.GET_INSTALLED);
-    setInstalled(updated);
+    if (updated) setInstalled(updated);
   };
 
   return (
@@ -60,16 +54,17 @@ export const Extensions: React.FC = () => {
           color: '#bbbbbb',
         }}
       >
-        Расширения и Плагины
+        Расширения и Маркетплейс VS Code
       </div>
-      <div style={{ padding: '8px' }}>
+
+      <form onSubmit={handleSearchSubmit} style={{ padding: '8px', display: 'flex', gap: '4px' }}>
         <input
           type="text"
-          placeholder="Поиск плагинов..."
+          placeholder="Поиск в VS Code Marketplace (Prettier, Python, ESLint...)"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{
-            width: '100%',
+            flex: 1,
             backgroundColor: '#3c3c3c',
             color: '#ffffff',
             padding: '6px 10px',
@@ -77,31 +72,49 @@ export const Extensions: React.FC = () => {
             fontSize: '12px',
           }}
         />
-      </div>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: '#0e639c',
+            color: '#ffffff',
+            padding: '6px 10px',
+            borderRadius: '2px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Search size={14} />
+        </button>
+      </form>
 
       <div style={{ flex: 1, overflowY: 'auto' }}>
-        <div style={{ padding: '8px', fontSize: '11px', fontWeight: 600, color: '#aaaaaa' }}>
-          УСТАНОВЛЕННЫЕ ПЛАГИНЫ ({installed.length})
-        </div>
-        {installed.map((inst: InstalledPlugin) => (
-          <div
-            key={inst.manifest.id}
-            style={{
-              padding: '6px 12px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '12px',
-            }}
-          >
-            <Package size={16} color="#4EC9B0" />
-            <span>{inst.manifest.displayName}</span>
-          </div>
-        ))}
+        {installed.length > 0 && (
+          <>
+            <div style={{ padding: '8px 12px', fontSize: '11px', fontWeight: 600, color: '#aaaaaa' }}>
+              УСТАНОВЛЕННЫЕ ПЛАГИНЫ ({installed.length})
+            </div>
+            {installed.map((inst: InstalledPlugin) => (
+              <div
+                key={inst.manifest.id}
+                style={{
+                  padding: '6px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '12px',
+                }}
+              >
+                <Package size={16} color="#4EC9B0" />
+                <span>{inst.manifest.displayName}</span>
+              </div>
+            ))}
+          </>
+        )}
 
-        <div style={{ padding: '8px', fontSize: '11px', fontWeight: 600, color: '#aaaaaa', marginTop: '12px' }}>
-          МАРКЕТПЛЕЙС
+        <div style={{ padding: '8px 12px', fontSize: '11px', fontWeight: 600, color: '#aaaaaa', marginTop: '4px' }}>
+          ОФИЦИАЛЬНЫЙ VS CODE МАРКЕТПЛЕЙС {loading && '(загрузка...)'}
         </div>
+
         <Marketplace plugins={marketplace} onInstall={handleInstall} />
       </div>
     </div>

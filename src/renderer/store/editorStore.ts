@@ -5,6 +5,7 @@ import { getLanguageByExtension } from '../../shared/constants/languages';
 import { getFileExtension } from '../../shared/utils/path';
 
 interface EditorState {
+  rootPath: string | null;
   files: Map<string, EditorFile>;
   tabs: EditorTab[];
   activeTabId: string | null;
@@ -12,6 +13,7 @@ interface EditorState {
   diffMode: boolean;
   diffFiles: { original: string; modified: string } | null;
 
+  setRootPath: (path: string | null) => void;
   openFile: (path: string, content: string) => void;
   closeTab: (tabId: string) => void;
   setActiveTab: (tabId: string) => void;
@@ -23,12 +25,15 @@ interface EditorState {
 }
 
 export const useEditorStore = create<EditorState>((set, get) => ({
+  rootPath: null,
   files: new Map(),
   tabs: [],
   activeTabId: null,
   diagnostics: [],
   diffMode: false,
   diffFiles: null,
+
+  setRootPath: (rootPath: string | null) => set({ rootPath }),
 
   openFile: (filePath: string, content: string) => {
     const { files, tabs } = get();

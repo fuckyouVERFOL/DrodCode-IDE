@@ -3,12 +3,15 @@ import * as path from 'path';
 import { createApplicationMenu } from './menu';
 
 export function createMainWindow(): BrowserWindow {
+  const iconPath = path.join(__dirname, '../../resources/icons/icon.png');
+
   const mainWindow = new BrowserWindow({
     width: 1400,
     height: 900,
     minWidth: 1000,
     minHeight: 600,
     title: 'DrodCode IDE',
+    icon: iconPath,
     frame: true,
     backgroundColor: '#1e1e1e',
     webPreferences: {

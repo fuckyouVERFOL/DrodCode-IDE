@@ -8,6 +8,12 @@ interface MarketplaceProps {
 }
 
 export const Marketplace: React.FC<MarketplaceProps> = ({ plugins, onInstall }) => {
+  const formatDownloads = (num: number) => {
+    if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
+    if (num >= 1_000) return `${(num / 1_000).toFixed(1)}k`;
+    return `${num}`;
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '8px' }}>
       {plugins.map((plugin) => (
@@ -20,19 +26,21 @@ export const Marketplace: React.FC<MarketplaceProps> = ({ plugins, onInstall }) 
             padding: '8px',
             backgroundColor: '#2d2d2d',
             borderRadius: '4px',
+            border: '1px solid #3c3c3c',
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontWeight: 600, fontSize: '13px', color: '#ffffff' }}>{plugin.displayName}</span>
-            <span style={{ fontSize: '11px', color: '#888888' }}>v{plugin.version}</span>
+            <span style={{ fontWeight: 600, fontSize: '12px', color: '#ffffff' }}>{plugin.displayName}</span>
+            <span style={{ fontSize: '10px', color: '#888888' }}>v{plugin.version}</span>
           </div>
-          <p style={{ fontSize: '11px', color: '#cccccc' }}>{plugin.description}</p>
+          <div style={{ fontSize: '10px', color: '#569CD6' }}>{plugin.publisher}</div>
+          <p style={{ fontSize: '11px', color: '#cccccc', margin: '2px 0' }}>{plugin.description}</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px' }}>
-            <div style={{ display: 'flex', gap: '8px', fontSize: '11px', color: '#aaaaaa' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                <Download size={12} /> {plugin.downloads}
+            <div style={{ display: 'flex', gap: '10px', fontSize: '11px', color: '#aaaaaa' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                <Download size={12} color="#4EC9B0" /> {formatDownloads(plugin.downloads)}
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                 <Star size={12} color="#E8AB53" /> {plugin.rating}
               </span>
             </div>
@@ -41,9 +49,11 @@ export const Marketplace: React.FC<MarketplaceProps> = ({ plugins, onInstall }) 
               style={{
                 backgroundColor: '#0e639c',
                 color: '#ffffff',
-                padding: '3px 8px',
+                padding: '3px 10px',
                 borderRadius: '2px',
                 fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
               }}
             >
               Установить

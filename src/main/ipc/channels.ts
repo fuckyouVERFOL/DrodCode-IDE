@@ -54,6 +54,7 @@ export const IPC_CHANNELS = {
     ENABLE: 'plugin:enable',
     DISABLE: 'plugin:disable',
     EXECUTE_COMMAND: 'plugin:execute-command',
+    SEARCH_MARKETPLACE: 'plugin:search-marketplace',
   },
   AI: {
     CHAT: 'ai:chat',
@@ -61,6 +62,7 @@ export const IPC_CHANNELS = {
     EXPLAIN: 'ai:explain',
     FIX_ERRORS: 'ai:fix-errors',
     REFACTOR: 'ai:refactor',
+    GET_MODELS: 'ai:get-models',
   },
   SETTINGS: {
     READ: 'settings:read',

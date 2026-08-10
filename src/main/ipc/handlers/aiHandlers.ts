@@ -6,15 +6,28 @@ import { aiCompletionEngine } from '../../ai/completion';
 export function registerAIHandlers(): void {
   ipcMain.handle(
     IPC_CHANNELS.AI.CHAT,
-    async (_, payload: { messages: AIChatMessage[]; contextCode?: string }) => {
+    async (_, payload: { messages: AIChatMessage[]; contextCode?: string; modelName?: string }) => {
       try {
-        const response = await aiChatEngine.generateResponse(payload.messages, payload.contextCode);
+        const response = await aiChatEngine.generateResponse(
+          payload.messages,
+          payload.contextCode,
+          payload.modelName
+        );
         return { success: true, response };
       } catch (err: any) {
         return { success: false, error: err.message };
       }
     },
   );
+
+  ipcMain.handle(IPC_CHANNELS.AI.GET_MODELS, async () => {
+    try {
+      const models = await aiChatEngine.getAvailableModels();
+      return { success: true, models };
+    } catch (err: any) {
+      return { success: false, models: ['qwen2.5-coder', 'llama3', 'deepseek-r1'] };
+    }
+  });
 
   ipcMain.handle(
     IPC_CHANNELS.AI.COMPLETE,
