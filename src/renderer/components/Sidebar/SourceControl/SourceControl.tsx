@@ -33,9 +33,15 @@ export const SourceControl: React.FC = () => {
       >
         <span>Управление версиями</span>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <RefreshCw size={14} style={{ cursor: 'pointer' }} onClick={() => refreshStatus()} title="Обновить" />
-          <UploadCloud size={14} style={{ cursor: 'pointer' }} onClick={push} title="Push" />
-          <DownloadCloud size={14} style={{ cursor: 'pointer' }} onClick={pull} title="Pull" />
+          <span title="Обновить" style={{ cursor: 'pointer', display: 'flex' }} onClick={() => refreshStatus()}>
+            <RefreshCw size={14} />
+          </span>
+          <span title="Push" style={{ cursor: 'pointer', display: 'flex' }} onClick={push}>
+            <UploadCloud size={14} />
+          </span>
+          <span title="Pull" style={{ cursor: 'pointer', display: 'flex' }} onClick={pull}>
+            <DownloadCloud size={14} />
+          </span>
         </div>
       </div>
 

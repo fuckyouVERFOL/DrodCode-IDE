@@ -41,9 +41,13 @@ export const Debug: React.FC = () => {
         <span>Отладка (DAP)</span>
         <div style={{ display: 'flex', gap: '8px' }}>
           {!debugging ? (
-            <Play size={14} color="#4EC9B0" style={{ cursor: 'pointer' }} onClick={startDebug} title="Запуск отладки" />
+            <span title="Запуск отладки" style={{ cursor: 'pointer', display: 'flex' }} onClick={startDebug}>
+              <Play size={14} color="#4EC9B0" />
+            </span>
           ) : (
-            <Square size={14} color="#F44747" style={{ cursor: 'pointer' }} onClick={stopDebug} title="Остановить" />
+            <span title="Остановить" style={{ cursor: 'pointer', display: 'flex' }} onClick={stopDebug}>
+              <Square size={14} color="#F44747" />
+            </span>
           )}
         </div>
       </div>
@@ -58,9 +62,15 @@ export const Debug: React.FC = () => {
             justify: 'center',
           }}
         >
-          <StepForward size={16} style={{ cursor: 'pointer' }} title="Step Over" />
-          <CornerDownRight size={16} style={{ cursor: 'pointer' }} title="Step Into" />
-          <CornerOutUpRight size={16} style={{ cursor: 'pointer' }} title="Step Out" />
+          <span title="Step Over" style={{ cursor: 'pointer', display: 'flex' }}>
+            <StepForward size={16} />
+          </span>
+          <span title="Step Into" style={{ cursor: 'pointer', display: 'flex' }}>
+            <CornerDownRight size={16} />
+          </span>
+          <span title="Step Out" style={{ cursor: 'pointer', display: 'flex' }}>
+            <CornerOutUpRight size={16} />
+          </span>
         </div>
       )}
 

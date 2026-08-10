@@ -33,9 +33,15 @@ export const FileExplorer: React.FC = () => {
       >
         <span>Проводник</span>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <FilePlus size={14} style={{ cursor: 'pointer' }} title="Новый файл" />
-          <FolderPlus size={14} style={{ cursor: 'pointer' }} title="Новая папка" />
-          <RefreshCw size={14} style={{ cursor: 'pointer' }} title="Обновить" />
+          <span title="Новый файл" style={{ cursor: 'pointer', display: 'flex' }}>
+            <FilePlus size={14} />
+          </span>
+          <span title="Новая папка" style={{ cursor: 'pointer', display: 'flex' }}>
+            <FolderPlus size={14} />
+          </span>
+          <span title="Обновить" style={{ cursor: 'pointer', display: 'flex' }}>
+            <RefreshCw size={14} />
+          </span>
         </div>
       </div>
 

@@ -4,13 +4,13 @@
   "description": "DrodCode IDE - Full-featured cross-platform Code Editor & IDE",
   "main": "dist/main/index.js",
   "scripts": {
-    "dev": "webpack --config webpack.config.js --mode development --watch",
-    "build": "webpack --config webpack.config.js --mode production",
+    "dev": "npx webpack --config webpack.config.js --mode development --watch",
+    "build": "npx webpack --config webpack.config.js --mode production",
     "package": "node scripts/package.js",
     "release": "node scripts/release.js",
-    "test": "jest",
-    "lint": "eslint src --ext .ts,.tsx",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
+    "test": "npx jest",
+    "lint": "npx eslint src --ext .ts,.tsx",
+    "format": "npx prettier --write \"src/**/*.{ts,tsx,css,json}\"",
     "marketplace": "node marketplace-server/index.js"
   },
   "keywords": [
