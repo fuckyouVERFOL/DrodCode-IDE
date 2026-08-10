@@ -2,16 +2,19 @@ import { ipcMain } from 'electron';
 import { IPC_CHANNELS } from '../channels';
 import { aiChatEngine, AIChatMessage } from '../../ai/chat';
 import { aiCompletionEngine } from '../../ai/completion';
+import { aiAgentEngine } from '../../ai/agent';
+import { AIProviderConfig } from '../../ai/providers';
 
 export function registerAIHandlers(): void {
   ipcMain.handle(
     IPC_CHANNELS.AI.CHAT,
-    async (_, payload: { messages: AIChatMessage[]; contextCode?: string; modelName?: string }) => {
+    async (_, payload: { messages: AIChatMessage[]; contextCode?: string; modelName?: string; providerConfig?: AIProviderConfig }) => {
       try {
         const response = await aiChatEngine.generateResponse(
           payload.messages,
           payload.contextCode,
-          payload.modelName
+          payload.modelName,
+          payload.providerConfig
         );
         return { success: true, response };
       } catch (err: any) {
@@ -20,12 +23,31 @@ export function registerAIHandlers(): void {
     },
   );
 
+  ipcMain.handle(
+    IPC_CHANNELS.AI.EXECUTE_AGENT,
+    async (event, payload: { userGoal: string; rootPath: string; providerConfig: AIProviderConfig }) => {
+      try {
+        const result = await aiAgentEngine.executeAgentTask(
+          payload.userGoal,
+          payload.rootPath || process.cwd(),
+          payload.providerConfig,
+          (logMsg) => {
+            event.sender.send('ai:agent-progress', logMsg);
+          }
+        );
+        return { success: true, result };
+      } catch (err: any) {
+        return { success: false, error: err.message };
+      }
+    }
+  );
+
   ipcMain.handle(IPC_CHANNELS.AI.GET_MODELS, async () => {
     try {
       const models = await aiChatEngine.getAvailableModels();
       return { success: true, models };
     } catch (err: any) {
-      return { success: false, models: ['qwen2.5-coder', 'llama3', 'deepseek-r1'] };
+      return { success: false, models: ['qwen2.5-coder', 'llama3', 'deepseek-r1', 'gpt-4o', 'claude-3-5-sonnet', 'gemini-1.5-flash'] };
     }
   });
 

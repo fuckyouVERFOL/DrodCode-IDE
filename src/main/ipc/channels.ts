@@ -63,6 +63,9 @@ export const IPC_CHANNELS = {
     FIX_ERRORS: 'ai:fix-errors',
     REFACTOR: 'ai:refactor',
     GET_MODELS: 'ai:get-models',
+    EXECUTE_AGENT: 'ai:execute-agent',
+    SAVE_CONFIG: 'ai:save-config',
+    LOAD_CONFIG: 'ai:load-config',
   },
   SETTINGS: {
     READ: 'settings:read',

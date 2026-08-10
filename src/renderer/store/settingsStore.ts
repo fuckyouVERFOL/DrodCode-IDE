@@ -40,7 +40,7 @@ export const DEFAULT_SETTINGS: IDESettings = {
 
 interface SettingsState {
   settings: IDESettings;
-  activeView: 'explorer' | 'search' | 'git' | 'debug' | 'extensions' | 'settings' | 'ai';
+  activeView: 'explorer' | 'search' | 'git' | 'debug' | 'extensions' | 'settings' | 'ai' | 'browser';
 
   updateSettings: (newSettings: Partial<IDESettings>) => void;
   setActiveView: (view: SettingsState['activeView']) => void;

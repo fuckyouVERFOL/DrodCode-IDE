@@ -9,6 +9,7 @@ import { Settings } from './components/Settings/Settings';
 import { EditorGroup } from './components/Editor/EditorGroup';
 import { Terminal } from './components/Panel/Terminal/Terminal';
 import { AIChat } from './components/Panel/AI/AIChat';
+import { BrowserPanel } from './components/Panel/Browser/BrowserPanel';
 import { StatusBar } from './components/StatusBar/StatusBar';
 import { useSettingsStore } from './store/settingsStore';
 import { useTerminalStore } from './store/terminalStore';
@@ -72,7 +73,7 @@ export const App: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', width: '100vw', height: '100vh', backgroundColor: '#1e1e1e', color: '#cccccc' }}>
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         <MenuBar />
-        {activeView !== 'settings' && (
+        {activeView !== 'settings' && activeView !== 'browser' && (
           <div
             style={{
               width: '280px',
@@ -87,6 +88,8 @@ export const App: React.FC = () => {
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
           {activeView === 'settings' ? (
             <Settings />
+          ) : activeView === 'browser' ? (
+            <BrowserPanel />
           ) : (
             <>
               <div style={{ flex: panelVisible ? 0.65 : 1, height: '100%' }}>

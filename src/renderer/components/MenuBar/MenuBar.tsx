@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSettingsStore } from '../../store/settingsStore';
-import { Files, Search, GitBranch, Bug, Package, Settings as SettingsIcon, Sparkles } from 'lucide-react';
+import { Files, Search, GitBranch, Bug, Package, Settings as SettingsIcon, Sparkles, Globe } from 'lucide-react';
 
 export const MenuBar: React.FC = () => {
   const { activeView, setActiveView } = useSettingsStore();
@@ -11,7 +11,8 @@ export const MenuBar: React.FC = () => {
     { id: 'git', icon: GitBranch, title: 'Управление версиями (Ctrl+Shift+G)' },
     { id: 'debug', icon: Bug, title: 'Отладка (Ctrl+Shift+D)' },
     { id: 'extensions', icon: Package, title: 'Расширения (Ctrl+Shift+X)' },
-    { id: 'ai', icon: Sparkles, title: 'AI Ассистент' },
+    { id: 'browser', icon: Globe, title: 'Встроенный Браузер & Live Preview' },
+    { id: 'ai', icon: Sparkles, title: 'AI Ассистент & Агент' },
   ];
 
   return (

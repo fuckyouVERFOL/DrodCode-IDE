@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AIProviderAdapter, AIProviderConfig } from './providers';
 
 export interface AIChatMessage {
   role: 'user' | 'assistant' | 'system';
@@ -17,13 +18,14 @@ export class AIChatEngine {
     } catch {
       // Ollama not running or no tags
     }
-    return ['qwen2.5-coder', 'qwen2.5', 'llama3', 'deepseek-r1', 'mistral', 'codellama'];
+    return ['qwen2.5-coder', 'qwen2.5', 'llama3', 'deepseek-r1', 'gpt-4o', 'claude-3-5-sonnet', 'gemini-1.5-flash'];
   }
 
   public async generateResponse(
     messages: AIChatMessage[],
     contextCode?: string,
-    modelName: string = 'qwen2.5-coder'
+    modelName: string = 'qwen2.5-coder',
+    providerConfig?: AIProviderConfig
   ): Promise<string> {
     const formattedMessages = [...messages];
 
@@ -32,6 +34,15 @@ export class AIChatEngine {
         role: 'system',
         content: `Вы являетесь основным ИИ-ассистентом DrodCode IDE. Контекст текущего открытого файла проекта:\n\`\`\`\n${contextCode}\n\`\`\``,
       });
+    }
+
+    if (providerConfig && providerConfig.provider !== 'ollama' && providerConfig.apiKey) {
+      try {
+        const res = await AIProviderAdapter.queryProvider(providerConfig, formattedMessages);
+        if (res) return res;
+      } catch (err: any) {
+        console.warn(`[AI Engine] Provider ${providerConfig.provider} query failed:`, err.message);
+      }
     }
 
     try {
