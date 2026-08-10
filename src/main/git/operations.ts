@@ -51,7 +51,7 @@ export class GitOperations {
         email: c.author_email,
         date: c.date,
         message: c.message,
-        parents: c.parents || [],
+        parents: (c as any).parents || [],
       }));
     } catch {
       // empty repo commit log

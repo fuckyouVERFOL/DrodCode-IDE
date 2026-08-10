@@ -14,7 +14,7 @@ export const AICompletion: React.FC<AICompletionProps> = ({ suggestion, onAccept
       style={{
         display: 'flex',
         alignItems: 'center',
-        justify: 'space-between',
+        justifyContent: 'space-between',
         padding: '6px 12px',
         backgroundColor: '#2d2d2d',
         borderTop: '1px solid #0e639c',

@@ -24,7 +24,7 @@ export const MenuBar: React.FC = () => {
         height: '100%',
         backgroundColor: '#333333',
         paddingTop: '8px',
-        justify: 'space-between',
+        justifyContent: 'space-between',
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

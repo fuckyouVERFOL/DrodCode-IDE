@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { IPCService } from '../../services/ipcService';
+import { IPCService } from '../../../services/ipcService';
 import { IPC_CHANNELS } from '../../../../main/ipc/channels';
-import { useEditor } from '../../hooks/useEditor';
+import { useEditor } from '../../../hooks/useEditor';
 import { Send, Bot, User, Sparkles } from 'lucide-react';
 
 interface ChatMessage {

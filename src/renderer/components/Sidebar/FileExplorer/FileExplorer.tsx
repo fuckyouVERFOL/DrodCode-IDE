@@ -20,7 +20,7 @@ export const FileExplorer: React.FC = () => {
       <div
         style={{
           display: 'flex',
-          justify: 'space-between',
+          justifyContent: 'space-between',
           alignItems: 'center',
           padding: '8px 12px',
           backgroundColor: '#252526',
@@ -55,7 +55,7 @@ export const FileExplorer: React.FC = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              justify: 'center',
+              justifyContent: 'center',
               gap: '12px',
               height: '100%',
               textAlign: 'center',

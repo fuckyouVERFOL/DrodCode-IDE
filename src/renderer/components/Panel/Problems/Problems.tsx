@@ -1,6 +1,7 @@
 import React from 'react';
-import { useEditorStore } from '../../store/editorStore';
+import { useEditorStore } from '../../../store/editorStore';
 import { AlertCircle, AlertTriangle, Info } from 'lucide-react';
+import { DiagnosticItem } from '../../../../shared/types/editor';
 
 export const Problems: React.FC = () => {
   const { diagnostics } = useEditorStore();
@@ -15,7 +16,7 @@ export const Problems: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', padding: '8px', overflowY: 'auto' }}>
-      {diagnostics.map((diag) => (
+      {diagnostics.map((diag: DiagnosticItem) => (
         <div
           key={diag.id}
           style={{

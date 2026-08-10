@@ -20,7 +20,7 @@ export const SourceControl: React.FC = () => {
       <div
         style={{
           display: 'flex',
-          justify: 'space-between',
+          justifyContent: 'space-between',
           alignItems: 'center',
           padding: '8px 12px',
           backgroundColor: '#252526',

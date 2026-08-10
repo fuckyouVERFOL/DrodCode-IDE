@@ -13,7 +13,7 @@ export const DiffViewer: React.FC = () => {
       <div
         style={{
           display: 'flex',
-          justify: 'space-between',
+          justifyContent: 'space-between',
           alignItems: 'center',
           padding: '6px 12px',
           backgroundColor: '#252526',

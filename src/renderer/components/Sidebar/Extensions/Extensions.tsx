@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { Marketplace } from './Marketplace';
-import { usePluginStore } from '../../store/pluginStore';
-import { IPCService } from '../../services/ipcService';
-import { IPC_CHANNELS } from '../../../main/ipc/channels';
+import { usePluginStore } from '../../../store/pluginStore';
+import { IPCService } from '../../../services/ipcService';
+import { IPC_CHANNELS } from '../../../../main/ipc/channels';
 import { Package } from 'lucide-react';
+import { InstalledPlugin, MarketplacePlugin } from '../../../../shared/types/plugin';
 
 export const Extensions: React.FC = () => {
   const { installed, marketplace, searchQuery, setInstalled, setMarketplace, setSearchQuery } = usePluginStore();
 
   useEffect(() => {
-    IPCService.invoke(IPC_CHANNELS.PLUGIN.GET_INSTALLED).then((res) => {
+    IPCService.invoke(IPC_CHANNELS.PLUGIN.GET_INSTALLED).then((res: InstalledPlugin[]) => {
       if (res) setInstalled(res);
     });
 
@@ -40,7 +41,7 @@ export const Extensions: React.FC = () => {
     ]);
   }, []);
 
-  const handleInstall = async (plugin: any) => {
+  const handleInstall = async (plugin: MarketplacePlugin) => {
     await IPCService.invoke(IPC_CHANNELS.PLUGIN.INSTALL, plugin.downloadUrl);
     const updated = await IPCService.invoke(IPC_CHANNELS.PLUGIN.GET_INSTALLED);
     setInstalled(updated);
@@ -82,7 +83,7 @@ export const Extensions: React.FC = () => {
         <div style={{ padding: '8px', fontSize: '11px', fontWeight: 600, color: '#aaaaaa' }}>
           УСТАНОВЛЕННЫЕ ПЛАГИНЫ ({installed.length})
         </div>
-        {installed.map((inst) => (
+        {installed.map((inst: InstalledPlugin) => (
           <div
             key={inst.manifest.id}
             style={{

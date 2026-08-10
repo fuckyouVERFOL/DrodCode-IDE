@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { VariablesView } from './VariablesView';
 import { CallStack } from './CallStack';
-import { Play, Square, StepForward, CornerDownRight, CornerOutUpRight } from 'lucide-react';
-import { IPCService } from '../../services/ipcService';
-import { IPC_CHANNELS } from '../../../main/ipc/channels';
+import { Play, Square, StepForward, CornerDownRight, CornerUpRight } from 'lucide-react';
+import { IPCService } from '../../../services/ipcService';
+import { IPC_CHANNELS } from '../../../../main/ipc/channels';
 
 export const Debug: React.FC = () => {
   const [debugging, setDebugging] = useState(false);
@@ -27,7 +27,7 @@ export const Debug: React.FC = () => {
       <div
         style={{
           display: 'flex',
-          justify: 'space-between',
+          justifyContent: 'space-between',
           alignItems: 'center',
           padding: '8px 12px',
           backgroundColor: '#252526',
@@ -59,7 +59,7 @@ export const Debug: React.FC = () => {
             gap: '12px',
             padding: '8px',
             backgroundColor: '#2d2d2d',
-            justify: 'center',
+            justifyContent: 'center',
           }}
         >
           <span title="Step Over" style={{ cursor: 'pointer', display: 'flex' }}>
@@ -69,7 +69,7 @@ export const Debug: React.FC = () => {
             <CornerDownRight size={16} />
           </span>
           <span title="Step Out" style={{ cursor: 'pointer', display: 'flex' }}>
-            <CornerOutUpRight size={16} />
+            <CornerUpRight size={16} />
           </span>
         </div>
       )}
