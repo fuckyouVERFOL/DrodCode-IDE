@@ -42,6 +42,9 @@ export class PluginMarketplaceClient {
         const rating = ratingStat ? Number(ratingStat.value.toFixed(1)) : 4.8;
         const downloadUrl = `${latestVersion.assetUri}/Microsoft.VisualStudio.Services.VSIXPackage`;
 
+        const iconFile = latestVersion.files?.find((f: any) => f.assetType === 'Microsoft.VisualStudio.Services.Icons.Default');
+        const iconUrl = iconFile ? iconFile.source : `${latestVersion.assetUri}/Microsoft.VisualStudio.Services.Icons.Default`;
+
         return {
           id: `${ext.publisher.publisherName}.${ext.extensionName}`,
           name: ext.extensionName,
@@ -52,6 +55,7 @@ export class PluginMarketplaceClient {
           downloads,
           rating,
           downloadUrl,
+          iconUrl,
         };
       });
     } catch (err: any) {
@@ -67,6 +71,7 @@ export class PluginMarketplaceClient {
           downloads: 45200000,
           rating: 4.8,
           downloadUrl: 'https://esbenp.gallery.vsassets.io/_apis/public/gallery/publisher/esbenp/extension/prettier-vscode/10.4.0/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage',
+          iconUrl: 'https://esbenp.gallery.vsassets.io/_apis/public/gallery/publisher/esbenp/extension/prettier-vscode/10.4.0/assetbyname/Microsoft.VisualStudio.Services.Icons.Default',
         },
         {
           id: 'ms-python.python',
@@ -78,6 +83,7 @@ export class PluginMarketplaceClient {
           downloads: 128000000,
           rating: 4.9,
           downloadUrl: 'https://ms-python.gallery.vsassets.io/_apis/public/gallery/publisher/ms-python/extension/python/2024.2.0/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage',
+          iconUrl: 'https://ms-python.gallery.vsassets.io/_apis/public/gallery/publisher/ms-python/extension/python/2024.2.0/assetbyname/Microsoft.VisualStudio.Services.Icons.Default',
         },
         {
           id: 'dbaeumer.vscode-eslint',
@@ -89,6 +95,7 @@ export class PluginMarketplaceClient {
           downloads: 32100000,
           rating: 4.7,
           downloadUrl: 'https://dbaeumer.gallery.vsassets.io/_apis/public/gallery/publisher/dbaeumer/extension/vscode-eslint/2.4.4/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage',
+          iconUrl: 'https://dbaeumer.gallery.vsassets.io/_apis/public/gallery/publisher/dbaeumer/extension/vscode-eslint/2.4.4/assetbyname/Microsoft.VisualStudio.Services.Icons.Default',
         },
         {
           id: 'eamodio.gitlens',
@@ -100,6 +107,7 @@ export class PluginMarketplaceClient {
           downloads: 29800000,
           rating: 4.9,
           downloadUrl: 'https://eamodio.gallery.vsassets.io/_apis/public/gallery/publisher/eamodio/extension/gitlens/15.0.0/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage',
+          iconUrl: 'https://eamodio.gallery.vsassets.io/_apis/public/gallery/publisher/eamodio/extension/gitlens/15.0.0/assetbyname/Microsoft.VisualStudio.Services.Icons.Default',
         },
       ];
     }

@@ -54,13 +54,13 @@ export const Extensions: React.FC = () => {
           color: '#bbbbbb',
         }}
       >
-        Расширения и Маркетплейс VS Code
+        Расширения
       </div>
 
       <form onSubmit={handleSearchSubmit} style={{ padding: '8px', display: 'flex', gap: '4px' }}>
         <input
           type="text"
-          placeholder="Поиск в VS Code Marketplace (Prettier, Python, ESLint...)"
+          placeholder="Поиск плагинов VS Code (Prettier, Python...)..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{
@@ -90,7 +90,7 @@ export const Extensions: React.FC = () => {
       <div style={{ flex: 1, overflowY: 'auto' }}>
         {installed.length > 0 && (
           <>
-            <div style={{ padding: '8px 12px', fontSize: '11px', fontWeight: 600, color: '#aaaaaa' }}>
+            <div style={{ padding: '6px 12px', fontSize: '11px', fontWeight: 600, color: '#aaaaaa' }}>
               УСТАНОВЛЕННЫЕ ПЛАГИНЫ ({installed.length})
             </div>
             {installed.map((inst: InstalledPlugin) => (
@@ -111,9 +111,11 @@ export const Extensions: React.FC = () => {
           </>
         )}
 
-        <div style={{ padding: '8px 12px', fontSize: '11px', fontWeight: 600, color: '#aaaaaa', marginTop: '4px' }}>
-          ОФИЦИАЛЬНЫЙ VS CODE МАРКЕТПЛЕЙС {loading && '(загрузка...)'}
-        </div>
+        {loading && (
+          <div style={{ padding: '8px 12px', fontSize: '11px', color: '#888888', fontStyle: 'italic' }}>
+            Поиск плагинов в маркетплейсе...
+          </div>
+        )}
 
         <Marketplace plugins={marketplace} onInstall={handleInstall} />
       </div>

@@ -36,14 +36,33 @@ export const Terminal: React.FC = () => {
       fontSize: 13,
       fontFamily: "'Fira Code', 'Consolas', monospace",
       cursorBlink: true,
+      convertEol: true,
     });
 
     const fitAddon = new FitAddon();
     term.loadAddon(fitAddon);
 
     term.open(terminalRef.current);
-    fitAddon.fit();
 
+    const safeFit = () => {
+      try {
+        if (terminalRef.current && terminalRef.current.clientWidth > 0 && terminalRef.current.clientHeight > 0) {
+          fitAddon.fit();
+          IPCService.invoke(IPC_CHANNELS.TERMINAL.RESIZE, {
+            id: activeTab.sessionId,
+            cols: term.cols,
+            rows: term.rows,
+          });
+        }
+      } catch {
+        // ignore layout errors
+      }
+    };
+
+    setTimeout(safeFit, 50);
+    setTimeout(safeFit, 300);
+
+    term.focus();
     xtermRef.current = term;
 
     term.onData((data) => {
@@ -59,20 +78,28 @@ export const Terminal: React.FC = () => {
       },
     );
 
-    const handleResize = () => fitAddon.fit();
-    window.addEventListener('resize', handleResize);
+    const resizeObserver = new ResizeObserver(() => {
+      safeFit();
+    });
+    resizeObserver.observe(terminalRef.current);
+
+    window.addEventListener('resize', safeFit);
 
     return () => {
       removeDataListener();
-      window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', safeFit);
       term.dispose();
     };
-  }, [activeTabId]);
+  }, [activeTabId, activeTab?.sessionId]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}>
+    <div
+      onClick={() => xtermRef.current?.focus()}
+      style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', backgroundColor: '#1e1e1e' }}
+    >
       <TerminalTabs />
-      <div ref={terminalRef} style={{ flex: 1, padding: '4px', overflow: 'hidden' }} />
+      <div ref={terminalRef} style={{ flex: 1, padding: '4px', overflow: 'hidden', minHeight: '120px' }} />
     </div>
   );
 };

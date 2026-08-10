@@ -1,4 +1,4 @@
-import { Menu, BrowserWindow, app, shell } from 'electron';
+import { Menu, BrowserWindow, app, shell, dialog } from 'electron';
 
 export function createApplicationMenu(window: BrowserWindow): void {
   const template: Electron.MenuItemConstructorOptions[] = [
@@ -82,12 +82,19 @@ export function createApplicationMenu(window: BrowserWindow): void {
         {
           label: 'DrodCode Documentation',
           click: async () => {
-            await shell.openExternal('https://github.com/drodcode/ide');
+            await shell.openExternal('https://github.com/fuckyouVERFOL/DrodCode-IDE');
           },
         },
         {
           label: 'About DrodCode IDE',
           click: () => {
+            dialog.showMessageBox(window, {
+              type: 'info',
+              title: 'О программе DrodCode IDE',
+              message: 'DrodCode IDE v1.0.0',
+              detail: 'Полнофункциональная кроссплатформенная IDE (Monaco + Terminal + Git + DAP Debugger + AI Assistant)\n\nРепозиторий: https://github.com/fuckyouVERFOL/DrodCode-IDE\nЛицензия: MIT',
+              buttons: ['OK'],
+            });
             window.webContents.send('menu:action', 'about');
           },
         },
