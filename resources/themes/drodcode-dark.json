@@ -1,0 +1,11 @@
+{
+  "name": "DrodCode Dark",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#1e1e1e",
+    "editor.foreground": "#d4d4d4",
+    "activityBar.background": "#333333",
+    "sideBar.background": "#252526",
+    "statusBar.background": "#007acc"
+  }
+}

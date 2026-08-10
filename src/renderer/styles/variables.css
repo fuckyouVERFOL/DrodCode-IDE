@@ -1,0 +1,15 @@
+:root {
+  --theme-background: #1e1e1e;
+  --theme-foreground: #cccccc;
+  --theme-sidebarBackground: #252526;
+  --theme-activityBarBackground: #333333;
+  --theme-statusBarBackground: #007acc;
+  --theme-accentColor: #0e639c;
+  --theme-border: #3c3c3c;
+  --theme-hoverBackground: #2a2d2e;
+  --theme-activeBackground: #37373d;
+  --theme-tabActiveBackground: #1e1e1e;
+  --theme-tabInactiveBackground: #2d2d2d;
+  --theme-inputBackground: #3c3c3c;
+  --theme-editorLineNumber: #858585;
+}

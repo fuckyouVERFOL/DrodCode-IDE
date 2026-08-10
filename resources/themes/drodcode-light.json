@@ -1,0 +1,11 @@
+{
+  "name": "DrodCode Light",
+  "type": "light",
+  "colors": {
+    "editor.background": "#ffffff",
+    "editor.foreground": "#000000",
+    "activityBar.background": "#2c2c2c",
+    "sideBar.background": "#f3f3f3",
+    "statusBar.background": "#007acc"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "editor.fontSize": 14,
+  "editor.fontFamily": "'Fira Code', 'Consolas', monospace",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": true,
+  "editor.renderWhitespace": "selection",
+  "editor.autoSave": "afterDelay",
+  "terminal.fontSize": 13,
+  "terminal.shell": "powershell.exe",
+  "workbench.colorTheme": "DrodCode Dark"
+}
